@@ -6,8 +6,22 @@ const {
     CHOICE_SET,
 } = require("./lib/questions");
 const { readPassword } = require("./lib/passwords");
+const { MongoClient } = require("mongodb");
+
+const uri =
+"mongodb+srv://emilycook321:<password>@cluster0.1nxms.mongodb.net?retryWrites=true&w=majority"
+ 
+const client = new MongoClient(uri);
 
 async function main() {
+    await client.connect();
+    const database = client.db("password_universe");
+    const collection = database.collection('passwords');
+await collection.insertOne({
+    name: "Wifi",
+    value: "password123",
+});
+
     const {masterPassword, action } = await askStartQuestions();
 
     if (masterPassword === "123") {
