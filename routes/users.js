@@ -2,14 +2,14 @@ const express = require("express");
 const { response } = require("express");
 
 function createUsersRouter(database) {
-    const router = express.Router();
+  const router = express.Router();
 
-    router.post("/login", async (request, response) => {
-        const { email, password } = request.body;
-        console.log(email, password);
-        response.send("Logged in");
-    });
-    return router;
+  router.post("/login", async (request, response) => {
+    const { email, password } = request.body;
+    console.log(email, password);
+    response.send("Logged in");
+  });
+  return router;
 }
 
-module.exports = craeetUsersRouter;
+module.exports = createUsersRouter;
