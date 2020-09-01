@@ -1,5 +1,6 @@
 const express = require("express");
 const { response } = require("express");
+const jwt = require("jsonwebtoken");
 
 function createUsersRouter(database) {
   const router = express.Router();
@@ -7,9 +8,6 @@ function createUsersRouter(database) {
   const usersCollection = database.collection("users");
 
   router.post("/login", async (request, response) => {
-    // const { email, password } = request.body;
-    // console.log(email, password);
-    // response.send("Logged in");
     try {
 const { email, password } = request.body;
 const user = await usersCollection.findOne({
@@ -21,8 +19,12 @@ if (!user) {
     response.status(401).send("Wrong email or password");
     return;
 }
+const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: "360",
+});
 
-console.log(user);
+response.setHeader("Set-Cookie", `authToken=${token};path=/;Max-Age=360`);
+
 response.send("Logged in");
     } catch (error) {
         console.error(error);

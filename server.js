@@ -23,7 +23,7 @@ async function main() {
   const masterPassword = process.env.MASTER_PASSWORD;
 
   app.use(bodyParser.json());
-  app.user(cookieParser());
+  app.use(cookieParser());
 
   app.use((request, response, next) => {
     console.log(`Request ${request.method} on ${request.url}`);
